@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head th:replace="~{frags/frags :: pageHead(${pizza.name})}" />
+  
+  <body th:object="${pizza}">
+		
+		<header th:replace="~{frags/frags :: header}"></header>
+		
+		<div class="container">
+	    
+			<div class="text-center mb-3 pb-3">
+				<h3 class="mb-0">
+					<strong>[[*{name}]]</strong> - [[*{#numbers.formatDecimal({price / 100}, 1, 2)}]]€
+				</h3>
+				<P>[[*{description}]]</P>
+				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>
+			</div>
+			
+			<h3 th:if="${pizza == null}">
+				The pizza does not exist
+			</h3>
+			
+		</div>
+    
+  </body>
+  
+</html>

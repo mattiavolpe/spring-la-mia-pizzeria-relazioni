@@ -26,7 +26,7 @@
 				<div class="my-4">
 					<div class="d-flex align-items-center gap-3">
 						<label for="startDate" class="w-25">Start date: </label>
-						<input type="date" name="startDate" id="startDate" placeholder="Type the start date..." th:field="*{startDate}" required>
+						<input type="date" name="startDate" id="startDate" placeholder="Type the start date..." th:field="*{HtmlStartDate}" required>
 					</div>
 					<ul th:if="${#fields.hasErrors('startDate')}" class="alert alert-danger list-unstyled mt-2">
 						<li th:each="error : ${#fields.errors('startDate')}">[[${error}]]</li>
@@ -36,7 +36,7 @@
 				<div class="my-4">
 					<div class="d-flex align-items-center gap-3">
 						<label for="endDate" class="w-25">End date: </label>
-						<input type="date" name="endDate" id="endDate" placeholder="Type the end date..." th:field="*{endDate}" required>
+						<input type="date" name="endDate" id="endDate" placeholder="Type the end date..." th:field="*{HtmlEndDate}" required>
 					</div>
 					<ul th:if="${#fields.hasErrors('endDate')}" class="alert alert-danger list-unstyled mt-2">
 						<li th:each="error : ${#fields.errors('endDate')}">[[${error}]]</li>
@@ -45,7 +45,7 @@
 				
 				<br />
 				
-				<button class="btn btn-outline-dark" type="submit">Insert</button>
+				<button class="btn btn-outline-dark" type="submit">[[${deal.id == 0 ? 'Insert' : 'Update'}]]</button>
 				
 			</form>
 			

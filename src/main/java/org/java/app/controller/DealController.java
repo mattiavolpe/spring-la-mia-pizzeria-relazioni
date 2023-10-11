@@ -34,6 +34,12 @@ public class DealController {
 	
 	@PostMapping("{pizza_id}/new-deal")
 	public String store(@PathVariable("pizza_id") int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("pizza", pizzaService.findById(id));
+			
+			return "create-update-deal";
+		}
+		
 		deal.setPizza(pizzaService.findById(id));
 		
 		dealService.saveDeal(deal);
@@ -51,7 +57,13 @@ public class DealController {
 	}
 	
 	@PostMapping("deals/edit/{id}")
-	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult) {
+	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("pizza", pizzaService.findById(id));
+			
+			return "create-update-deal";
+		}
+		
 		Deal originalDeal = dealService.findById(id);
 		Pizza pizza = originalDeal.getPizza();
 		

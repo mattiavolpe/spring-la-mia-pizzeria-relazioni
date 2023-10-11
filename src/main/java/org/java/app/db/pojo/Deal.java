@@ -1,6 +1,7 @@
 package org.java.app.db.pojo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -84,5 +85,21 @@ public class Deal {
 
 	public void setPizza(Pizza pizza) {
 		this.pizza = pizza;
+	}
+	
+	public String getHtmlStartDate() {
+		return getStartDate() == null ? null : getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+	}
+	
+	public void setHtmlStartDate(String date) {
+		setStartDate(LocalDate.parse(date));
+	}
+	
+	public String getHtmlEndDate() {
+		return getEndDate() == null ? null : getEndDate().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+	}
+	
+	public void setHtmlEndDate(String date) {
+		setEndDate(LocalDate.parse(date));
 	}
 }

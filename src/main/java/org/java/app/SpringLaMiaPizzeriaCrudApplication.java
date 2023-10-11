@@ -43,14 +43,20 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 			System.out.println(pizza);
 		}
 		
-		Deal deal1 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), "Deal 1", 10f, pizza2);
+		Deal deal1 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), pizza2.getName() + " deal", 10f, pizza2);
 		
-		Deal deal2 = new Deal(LocalDate.now(), LocalDate.parse("2023-11-12"), "Deal 2", 20.5f, pizza1);
+		Deal deal2 = new Deal(LocalDate.now(), LocalDate.parse("2023-11-12"), pizza1.getName() + " deal", 20.5f, pizza1);
 		
-		Deal deal3 = new Deal(LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"), "Expired deal", 30f, pizza3);
+		Deal deal3 = new Deal(LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"), pizza3.getName() + " expired deal", 30f, pizza3);
+		
+		Deal deal4 = new Deal(LocalDate.parse("2023-09-01"), LocalDate.parse("2023-10-01"), pizza1.getName() + " expired deal", 50f, pizza1);
+		
+		Deal deal5 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), pizza2.getName() + " deal with greater percentage", 50f, pizza2);
 		
 		dealService.saveDeal(deal1);
 		dealService.saveDeal(deal2);
 		dealService.saveDeal(deal3);
+		dealService.saveDeal(deal4);
+		dealService.saveDeal(deal5);
 	}
 }

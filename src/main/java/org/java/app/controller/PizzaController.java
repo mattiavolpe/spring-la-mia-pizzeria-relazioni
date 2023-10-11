@@ -2,6 +2,7 @@ package org.java.app.controller;
 
 import java.util.List;
 
+import org.java.app.db.pojo.Deal;
 import org.java.app.db.pojo.Pizza;
 import org.java.app.db.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,16 @@ public class PizzaController {
 	public String show(@PathVariable int id, Model model) {
 		Pizza pizza = pizzaService.findById(id);
 		
+		List<Deal> activeDeals = pizza.getDeals().stream().filter(deal -> deal.isAfterOrEqual(deal.getEndDate())).toList();
+		
+		float discount = 0f;
+		
+		for(Deal deal : activeDeals) {
+			discount = deal.getDiscount() > discount ? deal.getDiscount() : discount;
+		}
+		
 		model.addAttribute("pizza", pizza);
+		model.addAttribute("discount", discount);
 		
 		return "show";
 	}

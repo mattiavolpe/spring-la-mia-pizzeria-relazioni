@@ -105,6 +105,10 @@ public class Pizza {
 	public String getFormattedPrice() {
 		return String.format("%.02f", ((float) getPrice() / 100f));
 	}
+	
+	public String getFormattedDiscountedPrice(float discount) {
+		return String.format("%.02f", (((float) getPrice() * ((100f - discount) / 100f)) / 100f));
+	}
 
 	@Override
 	public String toString() {

@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Deal {
@@ -34,16 +35,21 @@ public class Deal {
 	@NotBlank
 	private String title;
 	
+	@Column(nullable = false)
+	@Positive
+	private float discount;
+	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Pizza pizza;
 	
 	public Deal() {}
 	
-	public Deal(LocalDate startDate, LocalDate endDate, String title, Pizza pizza) {
+	public Deal(LocalDate startDate, LocalDate endDate, String title, float discount, Pizza pizza) {
 		setStartDate(startDate);
 		setEndDate(endDate);
 		setTitle(title);
+		setDiscount(discount);
 		setPizza(pizza);
 	}
 	
@@ -66,6 +72,10 @@ public class Deal {
 	public LocalDate getEndDate() {
 		return endDate;
 	}
+	
+	public Boolean isAfterOrEqual(LocalDate date) {
+		return date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now());
+	}
 
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
@@ -77,6 +87,14 @@ public class Deal {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
 	}
 
 	public Pizza getPizza() {

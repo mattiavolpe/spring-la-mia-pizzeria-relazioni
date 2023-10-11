@@ -43,6 +43,16 @@
 					</ul>
 				</div>
 				
+				<div class="my-4">
+					<div class="d-flex align-items-center gap-3">
+						<label for="discount" class="w-25">Discount percentage: </label>
+						<input type="number" min="0.1" step="0.1" name="discount" id="discount" placeholder="Type the discount percentage..." th:field="*{discount}" required>
+					</div>
+					<ul th:if="${#fields.hasErrors('discount')}" class="alert alert-danger list-unstyled mt-2">
+						<li th:each="error : ${#fields.errors('discount')}">[[${error}]]</li>
+					</ul>
+				</div>
+				
 				<br />
 				
 				<button class="btn btn-outline-dark" type="submit">[[${deal.id == 0 ? 'Insert' : 'Update'}]]</button>

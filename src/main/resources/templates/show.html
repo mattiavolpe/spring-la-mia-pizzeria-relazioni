@@ -11,19 +11,28 @@
 	    
 			<div class="text-center mb-3 pb-3">
 				<h3 class="mb-0">
-					<strong>[[*{name}]]</strong> - [[*{FormattedPrice}]]€
+					<strong>[[*{name}]] - </strong>
+					<span th:if="${discount > 0}">
+						<span class="text-success">[[${pizza.getFormattedDiscountedPrice(discount)}]]€</span>
+						<span class="text-danger text-decoration-line-through">[[*{FormattedPrice}]]€</span>
+					</span>
+					<span th:unless="${discount > 0}">[[*{FormattedPrice}]]€</span>
 				</h3>
 				<P>[[*{description}]]</P>
 				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>
 				
 				<br />
-				<a th:href="@{'/' + *{id} + '/new-deal'}" class="d-inline-block btn btn-outline-success mt-3">Create a new offer</a>
+				<a th:href="@{'/' + *{id} + '/new-deal'}" class="d-inline-block btn btn-outline-success mt-3">Create a new deal</a>
 				
 				<hr th:if="${pizza.deals.size > 0}") class="w-50 mx-auto">
 				
 				<ul class="list-unstyled">
 					<li th:each="deal : *{deals}" th:object="${deal}">
-						<h4>[[*{title}]]</h3>
+						<h4>
+							<i th:if="*{isAfterOrEqual(endDate)}" class="fa-regular fa-calendar-check text-success"></i>
+							<i th:unless="*{isAfterOrEqual(endDate)}" class="fa-regular fa-calendar-xmark text-danger"></i>
+							[[*{title}]]
+						</h4>
 						<p class="mb-0">
 							<strong class="text-success">Starts:</strong> [[*{startDate}]]
 						</p>

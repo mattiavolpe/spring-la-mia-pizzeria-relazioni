@@ -33,7 +33,7 @@
 						<div class="card-body d-flex justify-content-center align-items-center">
 							<a th:href="@{/{id}(id=*{id})}" class="text-decoration-none text-dark">
 								<h3 class="mb-0">
-									<strong>[[*{name}]]</strong> - [[*{#numbers.formatDecimal({price / 100}, 1, 2)}]]€
+									<strong>[[*{name}]]</strong> - [[*{FormattedPrice}]]€
 								</h3>
 								<p class="mb-0">[[*{description}]]</p>
 							</a>

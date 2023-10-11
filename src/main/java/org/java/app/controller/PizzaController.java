@@ -79,12 +79,14 @@ public class PizzaController {
 			return "create-update";
 		}
 		
+		Pizza savedPizza = null;
+		
 		try {
-			pizzaService.savePizza(pizza);			
+			savedPizza = pizzaService.savePizza(pizza);			
 		} catch (Exception e) {
 			return "create-update";
 		}
 		
-		return "redirect:/";
+		return "redirect:/" + savedPizza.getId();
 	}
 }

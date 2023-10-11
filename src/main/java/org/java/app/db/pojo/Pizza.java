@@ -101,6 +101,10 @@ public class Pizza {
 	public void setPizzas(List<Deal> deals) {
 		this.deals = deals;
 	}
+	
+	public String getFormattedPrice() {
+		return String.format("%.02f", ((float) getPrice() / 100f));
+	}
 
 	@Override
 	public String toString() {

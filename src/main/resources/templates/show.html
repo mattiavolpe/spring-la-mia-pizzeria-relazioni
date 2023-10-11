@@ -11,7 +11,7 @@
 	    
 			<div class="text-center mb-3 pb-3">
 				<h3 class="mb-0">
-					<strong>[[*{name}]]</strong> - [[*{#numbers.formatDecimal({price / 100}, 1, 2)}]]€
+					<strong>[[*{name}]]</strong> - [[*{FormattedPrice}]]€
 				</h3>
 				<P>[[*{description}]]</P>
 				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>
@@ -28,9 +28,40 @@
 						<p class="mb-0">
 							<strong class="text-danger">Ends:</strong> [[*{endDate}]]
 						</p>
-						<a th:href="@{/deals/edit/{id}(id=*{id})}">
-							<i class="fa-solid fa-pen-to-square btn btn-outline-dark py-2 px-4 rounded-5 pointer mt-3" style="cursor: pointer;"></i>
-						</a>
+						<div class="d-flex align-items-center justify-content-center gap-2 mt-3">
+							
+							<a th:href="@{/deals/edit/{id}(id=*{id})}">
+								<i class="fa-solid fa-pen-to-square btn btn-outline-dark py-2 px-4 rounded-5 pointer" style="cursor: pointer;"></i>
+							</a>
+							
+							<!-- Button trigger modal -->
+							<button type="button" class="border-0 bg-transparent p-0" data-bs-toggle="modal" th:data-bs-target="*{'#deleteDeal' + {id}}" th:title="*{'dealDeleteToggler' + {id}}">
+							  <i class="fa-solid fa-trash btn btn-outline-danger py-2 px-4 rounded-5 pointer" style="cursor: pointer;"></i>
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" th:id="*{'deleteDeal' + {id}}" tabindex="-1" th:aria-labelledby="*{'dealModalLabel' + {id}}" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h1 class="modal-title fs-5" th:id="*{'dealModalLabel' + {id}}">Delete confirmation</h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        Are you sure you want to delete the deal "[[*{title}]]"?
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							        <form th:action="@{/deals/delete/{id}(id=*{id})}" method="post">
+								        <button type="submit" class="btn btn-danger">Delete</button>
+							      	</form>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
+						</div>
+						
 						<hr class="w-50 mx-auto">
 					</li>
 				</ul>

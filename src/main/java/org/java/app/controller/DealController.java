@@ -24,7 +24,7 @@ public class DealController {
 	@Autowired
 	private DealService dealService;
 	
-	@GetMapping("{id}/new-deal")
+	@GetMapping("/{id}/new-deal")
 	public String create(@PathVariable int id, Model model) {
 		model.addAttribute("deal", new Deal());
 		model.addAttribute("pizza", pizzaService.findById(id));
@@ -32,7 +32,7 @@ public class DealController {
 		return "create-update-deal";
 	}
 	
-	@PostMapping("{pizza_id}/new-deal")
+	@PostMapping("/{pizza_id}/new-deal")
 	public String store(@PathVariable("pizza_id") int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pizza", pizzaService.findById(id));
@@ -47,7 +47,7 @@ public class DealController {
 		return "redirect:/" + id;
 	}
 	
-	@GetMapping("deals/edit/{id}")
+	@GetMapping("/deals/edit/{id}")
 	public String edit(@PathVariable int id, Model model) {
 		Deal deal = dealService.findById(id);
 		model.addAttribute("deal", deal);
@@ -56,7 +56,7 @@ public class DealController {
 		return "create-update-deal";
 	}
 	
-	@PostMapping("deals/edit/{id}")
+	@PostMapping("/deals/edit/{id}")
 	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pizza", pizzaService.findById(id));
@@ -72,5 +72,14 @@ public class DealController {
 		dealService.saveDeal(deal);
 		
 		return "redirect:/" + pizza.getId();
+	}
+	
+	@PostMapping("/deals/delete/{id}")
+	public String delete(@PathVariable int id) {
+		int pizzaId = dealService.findById(id).getPizza().getId();
+		
+		dealService.deleteById(id);
+		
+		return "redirect:/" + pizzaId;
 	}
 }

@@ -17,8 +17,8 @@ public class PizzaService {
 		return pizzaRepo.findAll();
 	}
 	
-	public void savePizza(Pizza pizza) {
-		pizzaRepo.save(pizza);
+	public Pizza savePizza(Pizza pizza) {
+		return pizzaRepo.save(pizza);
 	}
 	
 	public Pizza findById(int id) {

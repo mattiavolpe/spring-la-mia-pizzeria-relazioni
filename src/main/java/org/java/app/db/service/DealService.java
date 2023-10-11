@@ -19,4 +19,8 @@ public class DealService {
 		Deal deal = dealRepo.findById(id).get();
 		return deal;
 	}
+	
+	public void deleteById(int id) {
+		dealRepo.deleteById(id);
+	}
 }

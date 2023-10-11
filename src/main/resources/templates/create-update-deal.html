@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 	
-	<head th:replace="~{frags/frags :: pageHead('New deal')}" />
+	<head th:replace="~{frags/frags :: pageHead(${deal.id} == 0 ? 'New deal' : 'Edit deal ' + ${deal.title})}" />
   
   <body>
 		
@@ -9,7 +9,7 @@
 		
 		<div class="container">
 			
-			<h1 class="text-center">New offer for pizza [[${pizza.name}]]</h1>
+			<h1 class="text-center">[[${deal.id == 0 ? 'New deal for pizza ' + {pizza.name} : 'Edit deal ' + {deal.title}}]]</h1>
 			
 			<form method="post" th:object="${deal}">
 				

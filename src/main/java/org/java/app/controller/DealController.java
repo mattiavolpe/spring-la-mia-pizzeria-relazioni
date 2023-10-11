@@ -1,6 +1,7 @@
 package org.java.app.controller;
 
 import org.java.app.db.pojo.Deal;
+import org.java.app.db.pojo.Pizza;
 import org.java.app.db.service.DealService;
 import org.java.app.db.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class DealController {
 		model.addAttribute("deal", new Deal());
 		model.addAttribute("pizza", pizzaService.findById(id));
 		
-		return "create-deal";
+		return "create-update-deal";
 	}
 	
 	@PostMapping("{pizza_id}/new-deal")
@@ -37,6 +38,27 @@ public class DealController {
 		
 		dealService.saveDeal(deal);
 		
-		return "redirect:/";
+		return "redirect:/" + id;
+	}
+	
+	@GetMapping("deals/edit/{id}")
+	public String edit(@PathVariable int id, Model model) {
+		Deal deal = dealService.findById(id);
+		model.addAttribute("deal", deal);
+		model.addAttribute("pizza", pizzaService.findById(deal.getPizza().getId()));
+		
+		return "create-update-deal";
+	}
+	
+	@PostMapping("deals/edit/{id}")
+	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult) {
+		Deal originalDeal = dealService.findById(id);
+		Pizza pizza = originalDeal.getPizza();
+		
+		deal.setPizza(pizza);
+		
+		dealService.saveDeal(deal);
+		
+		return "redirect:/" + pizza.getId();
 	}
 }

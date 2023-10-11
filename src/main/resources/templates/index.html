@@ -32,15 +32,15 @@
 						</div>
 						<div class="card-body d-flex justify-content-center align-items-center">
 							<a th:href="@{/{id}(id=*{id})}" class="text-decoration-none text-dark">
+								<h3 class="mb-0">[[*{name}]]</h3>
+								<p class="mb-0">[[*{description}]]</p>
 								<h3 class="mb-0">
-									<strong>[[*{name}]] - </strong>
 									<span th:if="*{discount > 0}">
 										<span class="text-success">[[${pizza.getFormattedDiscountedPrice(pizza.discount)}]]€</span>
-										<span class="text-danger text-decoration-line-through">[[*{FormattedPrice}]]€</span>
+										<h5 class="d-inline text-danger text-decoration-line-through">[[*{FormattedPrice}]]€</h5>
 									</span>
 									<span th:unless="*{discount > 0}">[[*{FormattedPrice}]]€</span>
 								</h3>
-								<p class="mb-0">[[*{description}]]</p>
 							</a>
 						</div>
 						<div class="card-footer d-flex justify-content-center gap-2 border-0 bg-white">

@@ -15,6 +15,22 @@
 				</h3>
 				<P>[[*{description}]]</P>
 				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>
+				
+				<br />
+				<a th:href="@{'/' + *{id} + '/new-deal'}" class="d-inline-block btn btn-outline-success my-3">Create a new offer</a>
+				
+				<ul class="list-unstyled">
+					<li th:each="deal : *{deals}" th:object="${deal}">
+						<h4>[[*{title}]]</h3>
+						<p class="mb-0">
+							<strong class="text-success">Starts:</strong> [[*{startDate}]]
+						</p>
+						<p class="mb-0">
+							<strong class="text-danger">Ends:</strong> [[*{endDate}]]
+						</p>
+						<hr class="w-50 mx-auto">
+					</li>
+				</ul>
 			</div>
 			
 			<h3 th:if="${pizza == null}">

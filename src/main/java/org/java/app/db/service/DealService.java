@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DealService {
-	@Autowired DealRepo dealRepo;
+	@Autowired
+	private DealRepo dealRepo;
 	
 	public void saveDeal(Deal deal) {
 		dealRepo.save(deal);

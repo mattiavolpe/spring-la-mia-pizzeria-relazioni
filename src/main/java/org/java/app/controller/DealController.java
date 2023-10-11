@@ -29,7 +29,7 @@ public class DealController {
 		model.addAttribute("pizza", pizzaService.findById(id));
 		model.addAttribute("pizzas", pizzaService.findAll());
 		
-		return "create-update-deal";
+		return "/deal/create-update";
 	}
 	
 	@PostMapping("/{pizza_id}/new-deal")
@@ -37,7 +37,7 @@ public class DealController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pizza", pizzaService.findById(id));
 			
-			return "create-update-deal";
+			return "/deal/create-update";
 		}
 		
 		deal.setPizza(pizzaService.findById(id));
@@ -55,7 +55,7 @@ public class DealController {
 		model.addAttribute("pizza", pizzaService.findById(deal.getPizza().getId()));
 		model.addAttribute("pizzas", pizzaService.findAll());
 		
-		return "create-update-deal";
+		return "/deal/create-update";
 	}
 	
 	@PostMapping("/deals/edit/{id}")
@@ -64,7 +64,7 @@ public class DealController {
 			model.addAttribute("pizza", pizzaService.findById(deal.getPizza().getId()));
 			model.addAttribute("pizzas", pizzaService.findAll());
 			
-			return "create-update-deal";
+			return "/deal/create-update";
 		}
 		
 //		CODE TO RETRIEVE pizza_id IF NO SELECT WAS USED

@@ -43,7 +43,7 @@ public class PizzaController {
 		model.addAttribute("pizzas", pizzas);
 		model.addAttribute("filter", filter);
 		
-		return "index";
+		return "/pizza/index";
 	}
 	
 	@GetMapping("/{id}")
@@ -62,14 +62,14 @@ public class PizzaController {
 		
 		model.addAttribute("pizza", pizza);
 		
-		return "show";
+		return "/pizza/show";
 	}
 	
 	@GetMapping("/create")
 	public String create(Model model) {
 		model.addAttribute("pizza", new Pizza());
 		
-		return "create-update";
+		return "/pizza/create-update";
 	}
 	
 	@PostMapping("/create")
@@ -81,7 +81,7 @@ public class PizzaController {
 	public String edit(@PathVariable int id, Model model) {
 		model.addAttribute("pizza", pizzaService.findById(id));
 		
-		return "create-update";
+		return "/pizza/create-update";
 	}
 	
 	@PostMapping("/edit/{id}")
@@ -98,7 +98,7 @@ public class PizzaController {
 	
 	private String storeUpdate(Pizza pizza, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "create-update";
+			return "/pizza/create-update";
 		}
 		
 		Pizza savedPizza = null;
@@ -106,7 +106,7 @@ public class PizzaController {
 		try {
 			savedPizza = pizzaService.savePizza(pizza);			
 		} catch (Exception e) {
-			return "create-update";
+			return "/pizza/create-update";
 		}
 		
 		return "redirect:/" + savedPizza.getId();

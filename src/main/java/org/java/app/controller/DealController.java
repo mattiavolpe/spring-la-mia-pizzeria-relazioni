@@ -1,7 +1,6 @@
 package org.java.app.controller;
 
 import org.java.app.db.pojo.Deal;
-import org.java.app.db.pojo.Pizza;
 import org.java.app.db.service.DealService;
 import org.java.app.db.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ public class DealController {
 	public String create(@PathVariable int id, Model model) {
 		model.addAttribute("deal", new Deal());
 		model.addAttribute("pizza", pizzaService.findById(id));
+		model.addAttribute("pizzas", pizzaService.findAll());
 		
 		return "create-update-deal";
 	}
@@ -50,28 +50,32 @@ public class DealController {
 	@GetMapping("/deals/edit/{id}")
 	public String edit(@PathVariable int id, Model model) {
 		Deal deal = dealService.findById(id);
+		
 		model.addAttribute("deal", deal);
 		model.addAttribute("pizza", pizzaService.findById(deal.getPizza().getId()));
+		model.addAttribute("pizzas", pizzaService.findAll());
 		
 		return "create-update-deal";
 	}
 	
 	@PostMapping("/deals/edit/{id}")
-	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {
+	public String update(@PathVariable int id, @Valid @ModelAttribute Deal deal, BindingResult bindingResult, Model model) {		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("pizza", pizzaService.findById(id));
+			model.addAttribute("pizza", pizzaService.findById(deal.getPizza().getId()));
+			model.addAttribute("pizzas", pizzaService.findAll());
 			
 			return "create-update-deal";
 		}
 		
-		Deal originalDeal = dealService.findById(id);
-		Pizza pizza = originalDeal.getPizza();
-		
-		deal.setPizza(pizza);
+//		CODE TO RETRIEVE pizza_id IF NO SELECT WAS USED
+//		Deal originalDeal = dealService.findById(id);
+//		Pizza pizza = originalDeal.getPizza();
+//		
+//		deal.setPizza(pizza);
 		
 		dealService.saveDeal(deal);
 		
-		return "redirect:/" + pizza.getId();
+		return "redirect:/" + deal.getPizza().getId();
 	}
 	
 	@PostMapping("/deals/delete/{id}")

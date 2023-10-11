@@ -53,6 +53,15 @@
 					</ul>
 				</div>
 				
+				<div th:if="*{id != 0}" class="my-4">
+					<div class="d-flex align-items-center gap-3">
+						<label for="pizza" class="w-25">Target pizza: </label>
+						<select th:object="${pizzas}" th:field="${deal.pizza.id}" id="pizza" required>
+							<option th:each="pizza : ${pizzas}" th:object="${pizza}" th:value="*{id}" th:selected="${pizza.id == deal.pizza.id}">[[*{name}]]</option>
+						</select>
+					</div>
+				</div>
+				
 				<br />
 				
 				<button class="btn btn-outline-dark" type="submit">[[${deal.id == 0 ? 'Insert' : 'Update'}]]</button>

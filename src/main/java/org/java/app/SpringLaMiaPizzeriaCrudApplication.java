@@ -1,7 +1,6 @@
 package org.java.app;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.java.app.db.pojo.Deal;
 import org.java.app.db.pojo.Pizza;
@@ -37,11 +36,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		pizzaService.savePizza(pizza2);
 		pizzaService.savePizza(pizza3);
 		
-		List<Pizza> pizzas = pizzaService.findAll();
-		
-		for(Pizza pizza : pizzas) {
-			System.out.println(pizza);
-		}
+		System.out.println("\n--------------------\nPizzas seeded\n--------------------\n");
 		
 		Deal deal1 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), pizza2.getName() + " deal", 10f, pizza2);
 		
@@ -51,12 +46,14 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		
 		Deal deal4 = new Deal(LocalDate.parse("2023-09-01"), LocalDate.parse("2023-10-01"), pizza1.getName() + " expired deal", 50f, pizza1);
 		
-		Deal deal5 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), pizza2.getName() + " deal with greater percentage", 50f, pizza2);
+		Deal deal5 = new Deal(LocalDate.now(), LocalDate.parse("2024-12-31"), pizza2.getName() + " deal with greater percentage", 50f, pizza2);
 		
 		dealService.saveDeal(deal1);
 		dealService.saveDeal(deal2);
 		dealService.saveDeal(deal3);
 		dealService.saveDeal(deal4);
 		dealService.saveDeal(deal5);
+		
+		System.out.println("\n--------------------\nDeals seeded\n--------------------\n");
 	}
 }

@@ -1,5 +1,7 @@
 package org.java.app.db.pojo;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -8,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
@@ -38,6 +41,9 @@ public class Pizza {
 	@Positive(message = "Price must be a positive number")
 	@Column(nullable = false)
 	private int price;
+	
+	@OneToMany(mappedBy = "pizza")
+	private List<Deal> deals;
 	
 	public Pizza() {};
 	
@@ -88,6 +94,14 @@ public class Pizza {
 		this.price = price;
 	}
 	
+	public List<Deal> getDeals() {
+		return deals;
+	}
+
+	public void setPizzas(List<Deal> deals) {
+		this.deals = deals;
+	}
+
 	@Override
 	public String toString() {
 		return getName() + " - " + String.format("%.02f", ((float) getPrice() / 100f)) + "€\n" + getDescription() + "\n";

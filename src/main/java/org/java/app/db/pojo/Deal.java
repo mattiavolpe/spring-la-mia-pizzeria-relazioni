@@ -2,17 +2,48 @@ package org.java.app.db.pojo;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.Length;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
 public class Deal {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(nullable = false)
+	@NotNull
 	private LocalDate startDate;
+	
+	@Column(nullable = false)
+	@NotNull
 	private LocalDate endDate;
+	
+	@Column(length = 100)
+	@Length(min = 3, max = 100)
+	@NotBlank
 	private String title;
+	
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Pizza pizza;
 	
 	public Deal() {}
 	
-	public Deal(LocalDate startDate, LocalDate endDate, String title) {
+	public Deal(LocalDate startDate, LocalDate endDate, String title, Pizza pizza) {
 		setStartDate(startDate);
 		setEndDate(endDate);
 		setTitle(title);
+		setPizza(pizza);
 	}
 
 	public LocalDate getStartDate() {
@@ -37,5 +68,13 @@ public class Deal {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Pizza getPizza() {
+		return pizza;
+	}
+
+	public void setPizza(Pizza pizza) {
+		this.pizza = pizza;
 	}
 }

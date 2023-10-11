@@ -45,6 +45,14 @@ public class Deal {
 		setTitle(title);
 		setPizza(pizza);
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public LocalDate getStartDate() {
 		return startDate;

@@ -29,6 +29,17 @@ public class PizzaController {
 								? pizzaService.findAll()
 								: pizzaService.filterByNameOrDescription(filter, filter);
 		
+		for(Pizza pizza : pizzas) {
+			float discount = 0f;
+			List<Deal> activeDeals = pizza.getDeals().stream().filter(deal -> deal.isAfterOrEqual(deal.getEndDate())).toList();
+			
+			for(Deal deal : activeDeals) {
+				discount = deal.getDiscount() > discount ? deal.getDiscount() : discount;
+			}
+			
+			pizza.setDiscount(discount);;
+		}
+		
 		model.addAttribute("pizzas", pizzas);
 		model.addAttribute("filter", filter);
 		
@@ -47,8 +58,9 @@ public class PizzaController {
 			discount = deal.getDiscount() > discount ? deal.getDiscount() : discount;
 		}
 		
+		pizza.setDiscount(discount);
+		
 		model.addAttribute("pizza", pizza);
-		model.addAttribute("discount", discount);
 		
 		return "show";
 	}

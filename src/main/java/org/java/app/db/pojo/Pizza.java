@@ -42,6 +42,8 @@ public class Pizza {
 	@Column(nullable = false)
 	private int price;
 	
+	private float discount = 0;
+	
 	@OneToMany(mappedBy = "pizza")
 	private List<Deal> deals;
 	
@@ -94,11 +96,19 @@ public class Pizza {
 		this.price = price;
 	}
 	
+	public float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
 	public List<Deal> getDeals() {
 		return deals;
 	}
 
-	public void setPizzas(List<Deal> deals) {
+	public void setDeals(List<Deal> deals) {
 		this.deals = deals;
 	}
 	

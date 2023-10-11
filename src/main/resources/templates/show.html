@@ -12,11 +12,11 @@
 			<div class="text-center mb-3 pb-3">
 				<h3 class="mb-0">
 					<strong>[[*{name}]] - </strong>
-					<span th:if="${discount > 0}">
-						<span class="text-success">[[${pizza.getFormattedDiscountedPrice(discount)}]]€</span>
+					<span th:if="*{discount > 0}">
+						<span class="text-success">[[${pizza.getFormattedDiscountedPrice(pizza.discount)}]]€</span>
 						<span class="text-danger text-decoration-line-through">[[*{FormattedPrice}]]€</span>
 					</span>
-					<span th:unless="${discount > 0}">[[*{FormattedPrice}]]€</span>
+					<span th:unless="*{discount > 0}">[[*{FormattedPrice}]]€</span>
 				</h3>
 				<P>[[*{description}]]</P>
 				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>

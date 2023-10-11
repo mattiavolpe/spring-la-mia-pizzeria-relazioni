@@ -17,7 +17,9 @@
 				<img th:src="*{url}" style="width: 60%; min-width: 296px;"/>
 				
 				<br />
-				<a th:href="@{'/' + *{id} + '/new-deal'}" class="d-inline-block btn btn-outline-success my-3">Create a new offer</a>
+				<a th:href="@{'/' + *{id} + '/new-deal'}" class="d-inline-block btn btn-outline-success mt-3">Create a new offer</a>
+				
+				<hr th:if="${pizza.deals.size > 0}") class="w-50 mx-auto">
 				
 				<ul class="list-unstyled">
 					<li th:each="deal : *{deals}" th:object="${deal}">

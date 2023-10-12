@@ -51,7 +51,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		ingredientService.saveIngredient(ingredient8);
 		ingredientService.saveIngredient(ingredient9);
 		
-		System.out.println("\n--------------------\nIngredients seeded\n--------------------\n");
+		System.out.println("\n--------------------\nIngredients seeded\n--------------------");
 		
 		Pizza pizza1 = new Pizza("Margherita", "Tomato sauce and mozzarella", "https://images.pexels.com/photos/6605214/pexels-photo-6605214.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", 650, ingredient1, ingredient2);
 		Pizza pizza2 = new Pizza("Tuna and onion", "Natural tuna, red onions and mozzarella", "https://www.galbani.it/sites/default/files/styles/width_1920/public/se_tonno_buona_da_star_bene_980x357.jpg", 900, ingredient3, ingredient4, ingredient2);
@@ -61,7 +61,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		pizzaService.savePizza(pizza2);
 		pizzaService.savePizza(pizza3);
 		
-		System.out.println("\n--------------------\nPizzas seeded\n--------------------\n");
+		System.out.println("\n--------------------\nPizzas seeded\n--------------------");
 		
 		Deal deal1 = new Deal(LocalDate.now(), LocalDate.parse("2023-12-31"), pizza2.getName() + " deal", 10f, pizza2);
 		Deal deal2 = new Deal(LocalDate.now(), LocalDate.parse("2023-11-12"), pizza1.getName() + " deal", 20.5f, pizza1);
@@ -75,6 +75,6 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		dealService.saveDeal(deal4);
 		dealService.saveDeal(deal5);
 		
-		System.out.println("\n--------------------\nDeals seeded\n--------------------\n");
+		System.out.println("\n--------------------\nDeals seeded\n--------------------");
 	}
 }

@@ -1,7 +1,10 @@
 package org.java.app.db.pojo;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -52,7 +55,7 @@ public class Pizza {
 	private List<Deal> deals;
 	
 	@ManyToMany
-	private List<Ingredient> ingredients;
+	private Set<Ingredient> ingredients;
 	
 	public Pizza() {};
 	
@@ -61,7 +64,7 @@ public class Pizza {
 		setDescription(description);
 		setUrl(url);
 		setPrice(price);
-		setIngredients(Arrays.asList(ingredients));
+		setIngredients(new HashSet<>(Arrays.asList(ingredients)));
 	}
 
 	public int getId() {
@@ -120,12 +123,24 @@ public class Pizza {
 		this.deals = deals;
 	}
 	
-	public List<Ingredient> getIngredients() {
+	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+	
+	public void addIngredient(Ingredient ingredient) {
+		getIngredients().add(ingredient);
+	}
+	
+	public void removeIngredient(Ingredient ingredient) {
+		getIngredients().remove(ingredient);
+	}
+	
+	public void removeDeal(Deal deal) {
+		getDeals().remove(deal);
 	}
 
 	public String getFormattedPrice() {
@@ -138,6 +153,20 @@ public class Pizza {
 
 	@Override
 	public String toString() {
-		return getName() + " - " + String.format("%.02f", ((float) getPrice() / 100f)) + "€\n" + getDescription() + "\n";
+		return "[" + getId() + "] " + getName() + " - " + String.format("%.02f", ((float) getPrice() / 100f)) + "€\n" + getDescription() + "\n";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Pizza)) return false;
+		
+		Pizza extObj = (Pizza) obj;
+		
+		return getId() == extObj.getId();
 	}
 }

@@ -14,6 +14,7 @@
 				<div class="col text-center">
 					<h3 class="mb-0">[[*{name}]]</h3>
 					<p class="mb-0">[[*{description}]]</p>
+					
 					<h3 class="mb-0">
 						<span th:if="*{discount > 0}">
 							<span class="text-success">[[${pizza.getFormattedDiscountedPrice(pizza.discount)}]]€</span>
@@ -21,7 +22,16 @@
 						</span>
 						<span th:unless="*{discount > 0}">[[*{FormattedPrice}]]€</span>
 					</h3>
+					
 					<img th:src="*{url}" class="w-100 my-3" />
+					
+					<h4 th:if="*{ingredients.size > 0}">Ingredients</h4>
+					<ul th:if="*{ingredients.size > 0}" class="list-unstyled">
+						<li th:each="ingredient, stats : *{ingredients}" th:object="${ingredient}" class="d-inline">
+							<span th:if="${stats.index < pizza.ingredients.size - 1}">[[*{name}]],</span>
+							<span th:unless="${stats.index < pizza.ingredients.size - 1}">[[*{name}]]</span>
+						</li>
+					</ul>
 				</div>
 					
 				<div class="col text-center">

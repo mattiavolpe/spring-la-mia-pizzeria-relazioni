@@ -22,6 +22,10 @@
 				<a href="/create" class="btn btn-outline-dark">Insert a new pizza</a>
 			</div>
 			
+			<div class="my-5">
+				<a href="/ingredients" class="btn btn-outline-dark">Watch all our ingredients</a>
+			</div>
+			
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
 				<div class="col mb-5 pb-3 text-center" th:each="pizza : ${pizzas}" th:object="${pizza}">
 					<div class="card border-0 h-100">

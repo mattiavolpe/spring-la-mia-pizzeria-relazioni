@@ -2,6 +2,7 @@ package org.java.app.db.pojo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -119,5 +120,24 @@ public class Deal {
 	
 	public void setHtmlEndDate(String date) {
 		setEndDate(LocalDate.parse(date));
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + getId() + "] " + getTitle();
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Deal)) return false;
+		
+		Deal extObj = (Deal) obj;
+		
+		return getId() == extObj.getId();
 	}
 }

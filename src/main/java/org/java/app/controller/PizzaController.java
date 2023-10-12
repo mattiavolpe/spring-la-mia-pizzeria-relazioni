@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.java.app.db.pojo.Deal;
 import org.java.app.db.pojo.Pizza;
+import org.java.app.db.service.DealService;
+import org.java.app.db.service.IngredientService;
 import org.java.app.db.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,12 @@ public class PizzaController {
 	@Autowired
 	private PizzaService pizzaService;
 	
+	@Autowired
+	private IngredientService ingredientService;
+	
+	@Autowired
+	private DealService dealService;
+	
 	@GetMapping
 	public String index(@RequestParam(required = false) String filter, Model model) {
 		List<Pizza> pizzas = filter == null
@@ -31,6 +39,7 @@ public class PizzaController {
 		
 		for(Pizza pizza : pizzas) {
 			float discount = 0f;
+			
 			List<Deal> activeDeals = pizza.getDeals().stream().filter(deal -> deal.isAfterOrEqual(deal.getEndDate())).toList();
 			
 			for(Deal deal : activeDeals) {
@@ -68,36 +77,50 @@ public class PizzaController {
 	@GetMapping("/create")
 	public String create(Model model) {
 		model.addAttribute("pizza", new Pizza());
+		model.addAttribute("ingredients", ingredientService.findAll());
 		
 		return "/pizza/create-update";
 	}
 	
 	@PostMapping("/create")
 	public String store(@Valid @ModelAttribute Pizza pizza, BindingResult bindingResult, Model model) {
-		return storeUpdate(pizza, bindingResult);
+		return storeUpdate(bindingResult, model, pizza);
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Model model) {
 		model.addAttribute("pizza", pizzaService.findById(id));
+		model.addAttribute("ingredients", ingredientService.findAll());
 		
 		return "/pizza/create-update";
 	}
 	
 	@PostMapping("/edit/{id}")
 	public String update(@Valid @ModelAttribute Pizza pizza, BindingResult bindingResult, Model model) {
-		return storeUpdate(pizza, bindingResult);
+		return storeUpdate(bindingResult, model, pizza);
 	}
 	
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Model model) {
+		Pizza pizza = pizzaService.findById(id);
+		
+		List<Deal> copyDeals = pizza.getDeals().stream().map(deal -> deal).toList();
+		
+		for (Deal deal : copyDeals) {			
+			pizza.removeDeal(deal);
+			
+			dealService.deleteById(deal.getId());
+		}
+		
 		pizzaService.deleteById(id);
 		
 		return "redirect:/";
 	}
 	
-	private String storeUpdate(Pizza pizza, BindingResult bindingResult) {
+	private String storeUpdate(BindingResult bindingResult, Model model, Pizza pizza) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("ingredients", ingredientService.findAll());
+			
 			return "/pizza/create-update";
 		}
 		
@@ -106,6 +129,8 @@ public class PizzaController {
 		try {
 			savedPizza = pizzaService.savePizza(pizza);			
 		} catch (Exception e) {
+			model.addAttribute("ingredients", ingredientService.findAll());
+			
 			return "/pizza/create-update";
 		}
 		

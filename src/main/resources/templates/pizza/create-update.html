@@ -52,6 +52,11 @@
 					</ul>
 				</div>
 				
+				<div class="my-4 me-3 d-inline-block" th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+					<input type="checkbox" th:field="${pizza.ingredients}" th:id="*{'ingredient-' + id}" th:value="*{id}" />
+					<label th:for="${'ingredient-' + ingredient.id}">[[*{name}]]</label>
+				</div>
+				
 				<br />
 				
 				<button class="btn btn-outline-dark" type="submit">[[${pizza.id == 0 ? 'Insert' : 'Update'}]]</button>

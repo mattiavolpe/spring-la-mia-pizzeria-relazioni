@@ -1,7 +1,9 @@
 package org.java.app.db.pojo;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -26,13 +28,13 @@ public class Ingredient {
 	private String name;
 	
 	@ManyToMany(mappedBy = "ingredients")
-	private List<Pizza> pizzas;
+	private Set<Pizza> pizzas;
 	
 	public Ingredient() {}
 
 	public Ingredient(String name, Pizza...pizzas) {
 		setName(name);
-		setPizzas(Arrays.asList(pizzas));
+		setPizzas(new HashSet<>(Arrays.asList(pizzas)));
 	}
 
 	public int getId() {
@@ -51,11 +53,42 @@ public class Ingredient {
 		this.name = name;
 	}
 
-	public List<Pizza> getPizzas() {
+	public Set<Pizza> getPizzas() {
 		return pizzas;
 	}
 
-	public void setPizzas(List<Pizza> pizzas) {
+	public void setPizzas(Set<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	};
+	
+	public boolean hasPizza(Pizza pizza) {
+		if (getPizzas() == null) return false;
+		
+		for (Pizza p : getPizzas()) {
+			if (p.getId() == pizza.getId()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return getName() + " ";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Ingredient)) return false;
+		
+		Ingredient extObj = (Ingredient) obj;
+		
+		return getId() == extObj.getId();
+	}
 }

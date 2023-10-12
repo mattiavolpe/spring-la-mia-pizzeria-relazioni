@@ -23,8 +23,8 @@ public class DealController {
 	@Autowired
 	private DealService dealService;
 	
-	@GetMapping("/{id}/new-deal")
-	public String create(@PathVariable int id, Model model) {
+	@GetMapping("/{pizza_id}/new-deal")
+	public String create(@PathVariable("pizza_id") int id, Model model) {
 		model.addAttribute("deal", new Deal());
 		model.addAttribute("pizza", pizzaService.findById(id));
 		model.addAttribute("pizzas", pizzaService.findAll());
@@ -67,7 +67,8 @@ public class DealController {
 			return "/deal/create-update";
 		}
 		
-//		CODE TO RETRIEVE pizza_id IF NO SELECT WAS USED
+//		CODE TO RETRIEVE pizza_id IF NO SELECT WAS USED, BECAUSE NO pizza.id COMES FROM THE FORM
+//		
 //		Deal originalDeal = dealService.findById(id);
 //		Pizza pizza = originalDeal.getPizza();
 //		

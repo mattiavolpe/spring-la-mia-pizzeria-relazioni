@@ -42,10 +42,15 @@ public class IngredientController {
 	public String store(@Valid @ModelAttribute Ingredient ingredient, BindingResult bindingResult, Model model) {
 		ingredientService.saveIngredient(ingredient);
 		
-		for (Pizza pizza : ingredient.getPizzas()) {
-			pizza.addIngredient(ingredient);
+		System.out.println(ingredient.getPizzas());
+		
+		if (ingredient.getPizzas() != null) {
 			
-			pizzaService.savePizza(pizza);
+			for (Pizza pizza : ingredient.getPizzas()) {
+				pizza.addIngredient(ingredient);
+				
+				pizzaService.savePizza(pizza);
+			}
 		}
 		
 		return "redirect:/ingredients";

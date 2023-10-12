@@ -37,7 +37,7 @@ public class PizzaController {
 				discount = deal.getDiscount() > discount ? deal.getDiscount() : discount;
 			}
 			
-			pizza.setDiscount(discount);;
+			pizza.setDiscount(discount);
 		}
 		
 		model.addAttribute("pizzas", pizzas);

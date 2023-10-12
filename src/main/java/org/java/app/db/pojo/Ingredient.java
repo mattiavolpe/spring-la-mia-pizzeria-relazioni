@@ -30,8 +30,7 @@ public class Ingredient {
 	
 	public Ingredient() {}
 
-	public Ingredient(int id, String name, Pizza...pizzas) {
-		setId(id);
+	public Ingredient(String name, Pizza...pizzas) {
 		setName(name);
 		setPizzas(Arrays.asList(pizzas));
 	}
